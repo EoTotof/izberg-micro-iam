@@ -1,5 +1,5 @@
 from django.test import TestCase
-from IAM.models import MyTestObject, MyOtherTestObject, Permission, AllowPolicy
+from apps.iam.models import MyTestObject, MyOtherTestObject, Permission, AllowPolicy
 from django.contrib.auth.models import User, Group
 
 class firstExercise(TestCase):

@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=100)),
                 ('resource', models.CharField(max_length=100)),
                 ('group', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='auth.Group')),
-                ('permissions', models.ManyToManyField(to='IAM.Permission')),
+                ('permissions', models.ManyToManyField(to='iam.Permission')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
