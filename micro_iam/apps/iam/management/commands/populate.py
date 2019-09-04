@@ -1,15 +1,20 @@
-from django.test import TestCase
+from django.core.management.base import BaseCommand
+
 from apps.iam.models import Permission, AllowPolicy
 from apps.theapp.models import MyTestObject, MyOtherTestObject
 from django.contrib.auth.models import User, Group
 
-class firstExercise(TestCase):
-    def setUp(self):
+class Command(BaseCommand):
+    def handle(self, *args, **options):
         read_permission = Permission.objects.create(name = "read")
         update_permission = Permission.objects.create(name = "update")
         delete_permission = Permission.objects.create(name = "delete")
+        read_permission.save()
+        update_permission.save()
+        delete_permission.save()
 
         admin_group = Group.objects.create(name = "admin")
+        admin_group.save()
 
         john_user = User.objects.create(username = "John", password = "aaaa")
         kevin_user = User.objects.create(
@@ -19,9 +24,15 @@ class firstExercise(TestCase):
         kevin_user.groups.add(admin_group)
         nicolas_user = User.objects.create(username = "Nicolas", password = "aaaa")
         hugo_user = User.objects.create(username = "Hugo", password = "aaaa")
+        john_user.save()
+        kevin_user.save()
+        nicolas_user.save()
+        hugo_user.save()
 
         object1 = MyTestObject.objects.create(name = "object_1")
         object2 = MyOtherTestObject.objects.create(name = "object_2")
+        object1.save()
+        object2.save()
 
         policy1 = AllowPolicy.objects.create(
             name = "Policy MyTestObject",
@@ -51,50 +62,21 @@ class firstExercise(TestCase):
         )
         policy4.permissions.set([read_permission])
 
-    def test_first_exercise(self):
-        object_1 = MyTestObject.objects.get(name = "object_1")
-        object_2 = MyOtherTestObject.objects.get(name = "object_2")
-
-        john = User.objects.get(username = "John")
-        kevin = User.objects.get(username = "Kevin")
-        nicolas = User.objects.get(username = "Nicolas")
-        hugo = User.objects.get(username = "Hugo")
-
-        self.assertIs(object_1.can_be("update", john), True)
-        self.assertIs(object_1.can_be("update", kevin), True)
-        self.assertIs(object_1.can_be("update", nicolas), False)
-
-        self.assertIs(object_2.can_be("update", hugo), True)
-        self.assertIs(object_2.can_be("update", kevin), False)
-        self.assertIs(object_2.can_be("update", nicolas), False)
-
-        self.assertIs(object_2.can_be("read", hugo), True)
-        self.assertIs(object_2.can_be("read", kevin), False)
-        self.assertIs(object_2.can_be("read", nicolas), True)
-
-class evolution1(firstExercise):
-    def setUp(self):
-        super().setUp()
-
-        read_permission = Permission.objects.get(name = "read")
-        update_permission = Permission.objects.get(name = "update")
+        policy1.save()
+        policy2.save()
+        policy3.save()
+        policy4.save()
 
         managers_group = Group.objects.create(name = "managers")
+        managers_group.save()
 
-        john = User.objects.get(username = "John")
-        john.groups.add(managers_group)
-
-        object_2 = MyOtherTestObject.objects.get(name = "object_2")
+        john_user.groups.add(managers_group)
+        john_user.save()
 
         policy5 = AllowPolicy.objects.create(
             name = "Policy MyOtherTestObject Manager",
-            resource = "MyOtherTestObject:" + str(object_2.id),
+            resource = "MyOtherTestObject:" + str(object2.id),
             group = managers_group
         )
         policy5.permissions.set([read_permission, update_permission])
-
-    def test_first_exercise(self):
-        object_2 = MyOtherTestObject.objects.get(name = "object_2")
-        john = User.objects.get(username = "John")
-
-        self.assertIs(object_2.can_be("read", john), True)
+        policy5.save()
