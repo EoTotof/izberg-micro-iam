@@ -22,3 +22,9 @@ To reset the database and repopulate it with data requested in the exercise, del
 
 	(env) python manage.py migrate
 	(env) python manage.py populate
+	
+I've written a test suite as an answer to the questions in the exercice which can be run with the following command:
+
+	(env) python manage.py test
+	
+The source for this test is in micro_iam/apps/iam/tests.py
