@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from apps.iam import views
+from apps.iam import views as iam_views
+from apps.theapp import views as theapp_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('iam/auth/',
-        views.auth,
-        name='auth'
-    )
+    path('iam/auth/', iam_views.auth, name='auth'),
+    path('iam/check_permission/', iam_views.check_permission, name = 'check_permission'),
+    path('theapp/mytestobject/<int:id>', theapp_views.mytestobject, name = 'mytestobject'),
+    path('theapp/myothertestobject/<int:id>', theapp_views.myothertestobject, name = 'myothertestobject')
 ]

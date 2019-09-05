@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "4f11a4a4-411c-45cc-82b5-83b031de5daf",
+		"name": "Micro IAM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Access Token for Nicolas",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"Nicolas\",\n\t\"password\" : \"aaaa\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/iam/auth/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"iam",
+						"auth",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Permission as John",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Access-Token",
+						"value": "qJEDvrgeSrUkitlx",
+						"type": "text"
+					},
+					{
+						"key": "Action",
+						"value": "read",
+						"type": "text"
+					},
+					{
+						"key": "Resource-Name",
+						"value": "MyTestObject",
+						"type": "text"
+					},
+					{
+						"key": "Object-Id",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"action\" : \"delete\",\n\t\"resource_name\" : \"MyOtherTestObject\",\n\t\"object_id\" : \"1\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/iam/check_permission/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"iam",
+						"check_permission",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get MyTestObject1 as John",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Access-Token",
+						"value": "qJEDvrgeSrUkitlx",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8000/theapp/mytestobject/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"theapp",
+						"mytestobject",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update MyTestObject 1 as John",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Access-Token",
+						"value": "qJEDvrgeSrUkitlx",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"object_1\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/theapp/mytestobject/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"theapp",
+						"mytestobject",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete MyTestObject 1 as John",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Access-Token",
+						"value": "qJEDvrgeSrUkitlx",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/theapp/mytestobject/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"theapp",
+						"mytestobject",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unauthorized action",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Access-Token",
+						"value": "qJEDvrgeSrUkitlx",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/theapp/myothertestobject/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"theapp",
+						"myothertestobject",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
